@@ -183,14 +183,6 @@ import UIKit
     printMathResult(addTwoInts, 3, 5)
 
 
-    func randomDice()->Int{
-        let dice = Int(arc4random_uniform(6)+1)
-        return dice
-    }
-    func showDiceNumber(random:()->Int){
-        print(random)
-    }
-    showDiceNumber(randomDice)
 
 
     // Function Types as Return Types ??
@@ -216,6 +208,37 @@ import UIKit
 
 
 
+    // Func type ในรูปแบบ Parameter
+    func randomDiceNumber()-> Int{
+        let dice = Int(arc4random_uniform(6)+1)
+        return dice
+    }
+    func showDiceNumber(random:()->Int){
+        print(random())
+    }
+    // randomDiceNumber()               // get ค่าที่ return กลับมาเฉยๆ ไม่เกี่ยว
+    showDiceNumber(randomDiceNumber)    // เอา Func randomDiceNumber ที่ได้ค่าออกมามาเป็นตัวเลขสุ่ม เอามาเป็น parameter
+
+
+    // Return type ในรูปแบบ Function Type ???
+    var posX = 10                                          // Define posX
+    var goDirectionRight:Bool = true
+
+    func goRight(xPosition:Int)->Int{                      // input int return int xPosition
+        return xPosition+1
+    }
+
+    func goLeft(xPosition:Int)->Int{
+        return xPosition-1
+    }
+
+    func currentPos(testLeftRight:Bool)->(Int)->Int{       // กำหนด return type (Int)->Int
+        let dicision:(Int)->Int = testLeftRight ? goRight : goLeft
+        return dicision
+    }
+
+    var posXNow = currentPos(goDirectionRight)
+    print("CurrentPos \(posXNow(posX))")
 
 
 
