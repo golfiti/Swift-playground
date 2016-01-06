@@ -279,3 +279,26 @@ for var x = 1; x < 10 ; x++ {
 }
 
 
+
+
+// กำหนด Labeled Statements
+// กำหนดชื่อให้กับการวน loop
+// ใช้กับ break เพื่อสั่งให้หยุดการวน loop
+// ใช้กับ continue เพื่อสั่งให้ทำใน loop ถัดไป
+
+var x = 0
+myLable : while x < 10 {
+    print(x)
+    ++x
+}
+
+var myText = "vulnerable"
+myText:for char in myText.characters{
+    switch char{
+        case "a","e","i","o","u":
+            continue myText         // ไปยัง loop ถัดไปของ for-in
+        default:
+            break                   // ออกจาก Switch
+    }
+    print(char)
+}

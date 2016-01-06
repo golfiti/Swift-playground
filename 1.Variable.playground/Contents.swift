@@ -12,11 +12,11 @@ import UIKit
 
 
 // Implicit data type
-    var normalText = 123
+    var normalText = 123                    // ไม่ต้องกำหนด Type รู้เองว่า Type อะไร
 
 // Explicit data type
     var helloMsg:String = "Hello"           // String
-    var helloMsgObj:NSString = "Hello"      // Swift 2 has bridged NSString from Foundation framwork to String already
+    var helloMsgObjC:NSString = "Hello"     // Swift 2 has bridged NSString from Foundation framwork to String already
     print(helloMsg)
     var postCode:Int = 111                  // Int
     var worldMsg:String?                    // define varible to nil
@@ -28,6 +28,9 @@ import UIKit
     var stringNumber:String = "1234"
     var intNumber:Int? = Int(stringNumber)      // Convert String to Int // "?" allow nil value
     intNumber = nil                             // myint is Optional can nil (swift can assign interger to nil)
+    var intNil:Int! = 30
+    print(intNil)
+
 
     let orangesAreOrange:Bool = true        // Bool
 
@@ -149,11 +152,38 @@ import UIKit
     // ใส่ ! หลัง OptionalTest() บังคับให้ OptionalTest ต้องมีค่า
     print(OptionalWithReturn)
 
-    // ImplicitlyUnwrapped Optional
-    // ใส่ ! หลัง Data Type เพื่อเมื่อกำหนดค่าครั้งแรกไปแล้ว Optional ก็จะมีค่าเสมอ
-    var testData:Int! = 34
-    let assumedString:String! = "Implictitly unwarpped"
-    print(assumedString)
+    // Implicitly Unwrapped Optional (กำหนดให้ตัวแปรต้องมีค่าเสมอ)
+    // ใส่ ! หลัง Data Type เพื่อเมื่อกำหนดค่าครั้งแรกไปแล้ว Optional ก็จะมีค่าเสมอ - Old 
+    // ใส่ ! หลัง Data Type เพื่ิิอมั้นใจว่าตัวแปรนี้จะมีค่าเสมอ *ถ้าค่าตัวแปรเป็น nil จะใช้ไม่ได้
+    // เหมือนกับประหยัดเวลา ไม่ต้องเรียกสร้างตัวแปรที่เป็น Optional ? ก่่อน เรียกใช่ ! ได้เลย
+
+    /*
+    Optional เป็นการอนุญาติให้ตัวแปรที่เราสร้างสามารถเป็น nil ได้ ซึ่งก่อนใช้งานตัวแปร 
+    เราสามารถใช้ if ตรวจสอบว่ามีค่าว่างก่อนใช่งาน หรือถ้าเรามั่นใจว่าไม่เป็นค่า nil แน่ๆ 
+    เราก็ใช้ Forced unwrapping (“!”) ได้เลย
+
+    แต่ในบางครั้ง เรามั่นใจเสมอว่า Optional ที่เราสร้างขึ้น หลังจากที่เราได้ค่าออกมาใช้งานในครั้งแรกแล้ว 
+    ตัวแปรนี้จะไม่เป็นค่า nil อีกต่อไป เราก็สามารถกำหนดได้ว่า ตัวแปรนี้ จะไม่มีวันเป็นค่า nil ตลอดไป ซึ่งจะเป็น optional 
+    ที่มีค่าเก็บอยู่ 100% โดยปกติเราจะใช้เครื่องหมาย ! ตอนเรียกใช้งานตัวแปรทุกครั้ง ซึ่งบางทีมันก็เสียเวลาใช่ไหมครับ ทั้งที่เรามั่นใจว่า 
+    ไม่ใช่ค่า nil แน่ๆ แต่ต้องมาใส่ “!” ทุกครั้งเลย   เพราะเหตุนี้จะมีวิธีให้เรายกเลิกการใช้เครื่องหมาย ! ทั้งหมดได้โดยง่าย 
+    ซึ่งจะถูกเรียกว่า Implicitly Unwrapped Optional
+    โดยที่ตอนที่สร้าง optional เราจะไม่ใช้เครื่องหมาย ? เพื่อสร้าง optional แต่เราจะใช้ ! ตั้งแต่ตอนสร้างเลย ยกตัวอย่างเช่น
+    */
+    var testData:Int!
+    testData = nil
+    if (testData == nil){
+        print("sting \(testData)")
+    }
+//    print(testData)
+    testData = 50
+    testData
+    print(testData)
+
+
+    var assumedString:String! = "Implictitly unwarpped"
+    print(assumedString) // not Optional
+    assumedString = nil
+
     var forcedString:String? = "Forced unwarpped"
     print(forcedString)
 
