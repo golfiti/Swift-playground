@@ -13,13 +13,14 @@ import UIKit
     }
     hello()
 
-    // No Return Type with param
+    // No Return Type with (local) parameter
+    // -- Local Parameter -- //
+
     func sumValue (value1:Int,value2:Int)->(){
         let result = value1 + value2
         print(result)
     }
     sumValue(1, value2: 3)
-
     func sumValueWithVoid (value1:Int,value2:Int)->(Void){
         let result = value1 + value2
         print(result)
@@ -48,22 +49,23 @@ import UIKit
     sumValueWithParameter(1, value2: 2)
 
 
+    // -- External Parameter -- //
+
     // Specifying External Parameter Names
     // เรียก external param ต้องเรียกจาก external name ที่กำหนดไว้,เริ่มเรียกจากชื่อตั้งแต่อันแรกเลย
     func specifyingExternalParamFunction(externalParameterName localParameterName: Int) {
         print(localParameterName)
     }
-    specifyingExternalParamFunction(externalParameterName: 99)
-
+    specifyingExternalParamFunction(externalParameterName: 99)      // เรียกแบบมีชื่อ param
 
     // Omitting External param
-    // ใช้ _ หน้า LocalParameter
-    // เรียกแบบไม่ต้องมีชื่อ param เลย
+    // ใช้ _ (underscroll) หน้า LocalParameter
+    // เรียกแบบไม่ต้องมีชื่อ parameter
     func omittingExternalParam(firstParam:Int,_ secondParameter:Int){
         print("\(firstParam)")
         print("\(secondParameter)")
     }
-    omittingExternalParam(11, 22)
+    omittingExternalParam(11, 22)                                  // เรียกแบบไม่มีชื่อ param
 
 
     // Return with Parameter
@@ -93,6 +95,12 @@ import UIKit
     }
     myProfile(["Krid","Wong","25"])  // return input as tuple
 
+
+    func printDate(date: NSDate, format: String = "YY/MM/dd") -> String {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = format
+        return dateFormatter.stringFromDate(date)
+    }
 
     // Default Value Parameter
     let orgName = "MyPay"
@@ -127,11 +135,11 @@ import UIKit
         stringInput = ("stringInput message \(stringInput)")
         print(stringInput)
     }
-    enterString(string: "test") // ค่าที่ส่งไปจะไม่ถูกเปลี่ยน
+    enterString(string: "test")            // ค่าที่ส่งไปจะไม่ถูกเปลี่ยน
 
 
     // Inout Parameters
-    // แก้ไขและแทนที่แปรเดิม
+    // แก้ไขและแทนที่ตัวแปรเดิม
     var name1 = "Mr.A ant mod"
     var name2 = "Mr.B bird nok"
     func nameSwap(inout name1: String, inout name2: String) {
@@ -260,35 +268,139 @@ import UIKit
 
 
 // --------- Closure --------- //
+
 // Function as Variable
 // Global Func
 // Nested Func
 // Closure Expression
 
-func diceRadom()->Int{
-    let dice = Int(arc4random_uniform(6)+1)
-    return dice
+// Syntax 
+// {(parameter) -> return type in statement }
+// หลัง in คือ โค๊ดของฟังก์ชั่นที่ไม่มีชื่อ 
+
+// ประกาศตัวแปรเพื่อเก็บ Closure
+// ฟังก์ชันนี้ Closure จะดูงงๆเราจะประกาศตัวแปรเพื่อเก็บค่า Closure ให้ง่ายขึ้น
+// func dismissView () {
+//        UIView.animateWithDuration(0.2, animations: { () -> Void in
+//                self.view.alpha = 0
+//                self.view.frame = CGRectMake(0, 0, 300, 400)
+//                }) { (sucess) -> Void in
+//                        if sucess {
+//                                self.view.removeFromSuperview()
+//                            }
+//                }
+// }
+
+// การประกาศตัวแปรเพื่อเก็บค่า func Closure จะใช้รูปแบบ
+// var closureName: (parameterTypes) -> (returnType)
+// func dissmiss() {
+//        let animate = {
+//                self.view.alpha = 0
+//                self.view.frame = CGRectMake(0, 0, 300, 400)
+//        }
+//    
+//        let doneAnimate = { (success:Bool) -> Void in
+//        if success {
+//                        self.view.removeFromSuperview()
+//                    }
+//        }
+//        UIView.animateWithDuration(0.2, animations: animate, completion: doneAnimate)
+// }
+
+
+
+// Normal Sort
+let names = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
+func backwards(s1: String, _ s2: String) -> Bool {
+    return s1 > s2
+}
+var reversed = names.sort(backwards)
+
+// Closures Sort
+var closureReverse = names.sort({ (s1: String, s2: String) -> Bool in
+    return s1 > s2
+})
+print(closureReverse)
+
+// Closures Expression
+// เขียนแบบต่อกันไป (inline)
+
+// Full Closure
+var result1 = names.sort({(s1: String, s2: String) -> Bool in
+    return s1 < s2
+})
+
+// Inferring Type From Context
+var result2 = names.sort({s1,s2 in
+    return s1 < s2
+})
+
+// Implicit Returns from Single-Expression Closures
+// ต้องมีคำสั่งเดียวจึงจะสามารถไม่ใส่ return ได้
+var result3 = names.sort({s1,s2 in
+    s1 < s2
+})
+
+// Shorthand Argument Names
+// $0 - argument ลำดับที่ 0, $1 - argument ลำดับที่ 1,...
+var result4 = names.sort({$0 < $1})
+var result41 : (Double,Double,Double) -> Double
+    result41 = {$0 * $1 * $2}
+    print(result41(1,2,3))
+
+
+// Operator Functions
+var result5 = names.sort(<)
+
+//
+var ClosureArea2 : (Double,Double,Double) ->Double
+ClosureArea2 = { (w,l,h) in ( w * l * h) }
+print("ClosureArea2 = \(ClosureArea2(1,2,3))")
+
+ClosureArea2 = { (a,b,c) in ( (a * b) * c) }
+print("ClosureArea2 after change logic = \(ClosureArea2(1,2,3))")
+
+
+
+
+
+var customersInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
+print(customersInLine.count)
+// prints "5"
+
+let customerProvider = { customersInLine.removeAtIndex(0) }
+print(customersInLine.count)
+// prints "5"
+
+print("Now serving \(customerProvider())!")
+// prints "Now serving Chris!"
+print(customersInLine.count)
+// prints "4"
+
+
+
+
+
+
+
+
+
+// แก้ไขค่าใน ref type ??
+func makeIncrementor(forIncrement amount:Int) -> () -> Int {
+    var runningTotal = 0
+    func incrementor() -> Int {
+        runningTotal += amount
+        return runningTotal
+    }
+    return incrementor
 }
 
-func doubleDice(diceInput:()->Int)->Int{
-    let diceNum = diceInput()*2
-    return diceNum
-}
-
-var yourTurn = doubleDice(diceRadom)
-print(yourTurn)
-
-
-
-
-
-
-
-
-
-
-
-
+var testIncrementby5 = makeIncrementor(forIncrement: 5)
+let newRef = testIncrementby5
+newRef()
+newRef()
+testIncrementby5()
+print("\(newRef())")
 
 
 
