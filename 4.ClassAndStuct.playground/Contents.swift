@@ -9,77 +9,131 @@ import UIKit
 
 // Class สามารถถ่ายทอดได้ (inherit) | Struct Inherit ไม่ได้
 // Class Type Casting เพื่อตรวจสอบ Instance นั้น Type อะไรตอน Runtime
-// Class Deinitailizer คืนความจำให้ระบบ
+// Class สามารถ Deinitailizer คืนความจำให้ระบบ
 // Class จะมี Reference-Counting เพื่ออ้างอิงและเชื่อมโยง หลายๆ Instance เข้าด้วยกัน
+// Class               - Reference Type -- ไม่ก๊อปปี้ค่า
+// Structure และ Enum  - Value Type -- ก๊อปปี้ค่าไปใช้งาน
 
 
-// "final" ใส่ไว้หน้า function เพื่อไม่ให้ method นี้ถูก override ได้
+// Instance คือ object ที่สร้างขึ้นมาจาก class
 
-
-
+// Class
 class ClassName {
 
-    var player:String
-    var numberOfPlayer:Int
+    var player:String // = "Unknown"
+    var numberOfPlayer:Int // = 0
     
-    // Default Init
+    // Default Initializer
     init(){
         // ถ้าไม่กำหนดค่า Default ตัวแปรจะใช้ Custom Init ไม่ได้
         player = "Unknown"
         numberOfPlayer = 0
     }
     
-    // Custom Init
+    // Custom Initializer
     init(inputPlayerName:String,inputNumberOfPlayer:Int){
-        self.player = inputPlayerName  // self หมายถึงการอ้างอิงไปยัง Instace ปัจจุบัน
+        self.player = inputPlayerName               // self หมายถึงการอ้างอิงไปยัง Instace ปัจจุบัน
         self.numberOfPlayer = inputNumberOfPlayer
     }
+    
+    /*final*/ func addNumberOfPlayer(){             // ใส่ final เพื่อป้องกันไม่ให้ method นี้ถูก override ได้
+        self.numberOfPlayer++
+    }
+
 }
 
 let playerInstance = ClassName(inputPlayerName:"Golf", inputNumberOfPlayer: 1)
-print("PLAYER NAME : \(playerInstance.player)",terminator:"")
+print("PLAYER NAME : \(playerInstance.player)",terminator:"")           // terminator print ตัด \n ออก
 print("PLAYER NUMBER : \(playerInstance.numberOfPlayer)",terminator:"")
 
 
-class ClassName2:ClassName{
+// Class with Inherit
+class ClassName2:ClassName{             // ClassName2 inherit from ClassName
     
     var score :Int
-    
-    func addNumberOfPlayer(){
-        self.numberOfPlayer++
+
+    override init() {                   // init จะถูกเรียกเสมอเมื่อ class ถูกเรียก
+        score = 99
+        super.init()
     }
-    
-    override init() {
-        score = 0
-        super.init()  // ต้องใส่เมื่อ override ด้วย
-    }
-    
     init(myScore:Int) {
         self.score = myScore
         super.init()
     }
+    // Override เมื่อต้องการให้ Sub Class ต่างจาก Super Class
+    override func addNumberOfPlayer() {
+        self.numberOfPlayer = self.numberOfPlayer+20
+    }
 }
 var addNewPlayer = ClassName2(myScore:40)
-// ดึงค่า Init Default ของ Super Class มา
 addNewPlayer.score
-addNewPlayer.player
-addNewPlayer.numberOfPlayer
+addNewPlayer.player                 // default Value
+
+addNewPlayer.addNumberOfPlayer()
+addNewPlayer.numberOfPlayer         // จะเป็นค่าจาก method ที่ override
 
 
+// Struct
 struct StructName {
-    var fullName:String = "bbbbbbb"
+    var player:String = "Player StructName"
     init(){
     }
 }
 
-//let classInstance = ClassName()
-//let structInstance = StructName()
-//
-//var getFullNameInClass = classInstance.fullName
-//var getFullNameInInstance = structInstance.fullName
 
+// เรียกใช้ property ของ Class & Struct
+let classInstance = ClassName()
+let structInstance = StructName()
 
-// init ที่อยู่ใน Class จะถูกเรียกอัตโนมัตเสมอ
+var getFullNameInClass = classInstance.player
+var getFullNameInInstance = structInstance.player
 
 
 // Computed Property -- Getter / Setter
+/*
+    Computed Property คือ property ที่เกิดจากการคำนวนค่า
+    get คือ อ่านค่าจาก Computed property
+    set คือ กำหนดค่าให้กับ Stored property อื่นๆ
+*/
+class TestGetterSetter {
+    var score:Int = 0
+    let bonus:Int = Int(arc4random_uniform(10)+1) // random bonus
+    var totalScore:Int {                          // Computed property
+        get {
+            return self.score + self.bonus  // คำนวนค่าเก็บใน property อื่น
+        }
+        set {
+            self.score = newValue           // กำหนดค่าผ่านทาง Computed property
+                                            // newValue คือ ค่าที่เรากำหนดไปยัง Computed property
+                                            // getterSetter.totalScore = 60 หมายความว่า newValue = 60
+        }
+    }
+    
+    init(score:Int) {
+        self.score = score
+    }
+}
+
+var getterSetter = TestGetterSetter(score: 10)
+getterSetter.totalScore = 60
+getterSetter.totalScore
+
+
+/*
+    lazy Stored Property
+    lazy คือ stored property ที่ยังไม่กำหนดค่าเริ่มต้น จนกว่าจะเรียกใช้งานครั้งแรก
+    ใช้กับ var เท่านั้น
+*/
+
+func getRandomNumber() -> Int{
+    let randomNumber = Int(arc4random_uniform(6)+1)
+    return randomNumber
+}
+class RandomNumber {
+    var myScore:Int = 0
+    lazy var myRandomNumber = getRandomNumber()
+    
+}
+var lazyRandomNumber = RandomNumber()
+lazyRandomNumber.myRandomNumber
+
