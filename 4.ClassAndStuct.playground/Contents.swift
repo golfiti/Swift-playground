@@ -89,6 +89,53 @@ var getFullNameInClass = classInstance.player
 var getFullNameInInstance = structInstance.player
 
 
+
+
+
+
+// Class เป็น Reference Type
+/*
+หากเรานำเอา Instance ที่สร้างจาก Class ไปกำหนดค่าให้กับ var หรือ let
+จะ *ไม่ใช้วิธีกาก๊อบปี้ แต่จะเป็นการอ้างอิงกับ Instance ตัวเดิม
+หากมีการแก้ไขค่าที่ Instance ภายใน ฟังก์ชันจะมีผลต่อ Instance ตัวเดิมที่เป็นต้นฉบับด้วย
+*/
+class ClassReferenceType{
+    var var1:Int = 0
+}
+func classRefFunc(classRefTypeInstance:ClassReferenceType){ // ใช้ Class เป็น parameter
+    let instance  = classRefTypeInstance        // กำหนดค่า (จะใช้ reference)
+    instance.var1 = 10
+}
+
+var instanceClassRefType = ClassReferenceType() // สร้าง Instance ของ Class
+print(instanceClassRefType.var1)
+classRefFunc(instanceClassRefType)              // ผ่านค่า Instance ไปยังฟังก์ชัน
+print(instanceClassRefType.var1)                // ค่าเปลี่ยนไปตามที่กำหนดในฟังก์ชัน
+
+
+// Struct
+/*
+จะใช้วิธีการก๊อบปี้ค่า
+*/
+struct structReferenceType{
+    var var1:Int = 0
+}
+
+func structRefFunc(structRefTypeInstance:structReferenceType){
+    var instance = structRefTypeInstance        // กำหนดค่า (จะใช้ copy)
+    instance.var1 = 12
+    print(instance.var1)
+}
+
+var instanceStructRefType = structReferenceType()
+structRefFunc(instanceStructRefType)
+print(instanceStructRefType.var1)
+
+
+
+
+
+
 // Computed Property -- Getter / Setter
 /*
     Computed Property คือ property ที่เกิดจากการคำนวนค่า
@@ -136,4 +183,3 @@ class RandomNumber {
 }
 var lazyRandomNumber = RandomNumber()
 lazyRandomNumber.myRandomNumber
-
