@@ -183,6 +183,8 @@ import UIKit
     var assumedString:String! = "Implictitly unwarpped"
     print(assumedString) // not Optional
     assumedString = nil
+    print("string \(assumedString)")
+//    print(assumedString)      // Implicitly unwrapped nil value cause runtime error
 
     var forcedString:String? = "Forced unwarpped"
     print(forcedString)

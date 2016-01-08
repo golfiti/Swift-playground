@@ -40,7 +40,7 @@ import UIKit
         print(param3)
     }
 
-    funcWithParam(1, param2: 2, param3: "3")
+    funcWithParam2(1, param2: 2, param3: "3")
 
     func sumValueWithParameter(value1:Int,value2:Int){
         let result = value1 + value2
@@ -123,6 +123,7 @@ import UIKit
         }
     }
     helloWithNames("Batman", "Superman", "Wonder Woman", "Catwoman")
+//    helloWithNames("Pauline")
 
 
     // Constance & Variable parameter
@@ -135,7 +136,10 @@ import UIKit
         stringInput = ("stringInput message \(stringInput)")
         print(stringInput)
     }
-    enterString(string: "test")            // ค่าที่ส่งไปจะไม่ถูกเปลี่ยน
+
+    let original = "test"
+    enterString(string: original) // ค่าที่ส่งไปจะไม่ถูกเปลี่ยน
+    print(original)
 
 
     // Inout Parameters
@@ -182,6 +186,7 @@ import UIKit
     mathFunction(2,3)
     let inferTypelet = addTwoInts
     inferTypelet(2,3)
+    addTwoInts(2, 3)
 
     // https://developer.apple.com/library/mac/documentation/Swift/Conceptual/Swift_Programming_Language/Functions.html
     // Function Types as Parameter Types ??
@@ -230,7 +235,7 @@ import UIKit
 
     // Return type ในรูปแบบ Function Type ???
     var posX = 10                                          // Define posX
-    var goDirectionRight:Bool = true
+    var goDirectionRight:Bool = false
 
     func goRight(xPosition:Int)->Int{                      // input int return int xPosition
         return xPosition+1
@@ -249,24 +254,6 @@ import UIKit
     print("CurrentPos \(posXNow(posX))")
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // --------- Closure --------- //
 
 // Function as Variable
@@ -280,16 +267,16 @@ import UIKit
 
 // ประกาศตัวแปรเพื่อเก็บ Closure
 // ฟังก์ชันนี้ Closure จะดูงงๆเราจะประกาศตัวแปรเพื่อเก็บค่า Closure ให้ง่ายขึ้น
-// func dismissView () {
-//        UIView.animateWithDuration(0.2, animations: { () -> Void in
-//                self.view.alpha = 0
-//                self.view.frame = CGRectMake(0, 0, 300, 400)
-//                }) { (sucess) -> Void in
-//                        if sucess {
-//                                self.view.removeFromSuperview()
-//                            }
-//                }
-// }
+//func dismissView () {
+//    UIView.animateWithDuration(0.2, animations: { () -> Void in
+//        self.view.alpha = 0
+//        self.view.frame = CGRectMake(0, 0, 300, 400)
+//        }, completion: { (sucess) -> Void in
+//            if sucess {
+//                self.view.removeFromSuperview()
+//            }
+//        })
+//}
 
 // การประกาศตัวแปรเพื่อเก็บค่า func Closure จะใช้รูปแบบ
 // var closureName: (parameterTypes) -> (returnType)
@@ -300,9 +287,9 @@ import UIKit
 //        }
 //    
 //        let doneAnimate = { (success:Bool) -> Void in
-//        if success {
+//            if success {
 //                        self.view.removeFromSuperview()
-//                    }
+//            }
 //        }
 //        UIView.animateWithDuration(0.2, animations: animate, completion: doneAnimate)
 // }
@@ -320,10 +307,13 @@ var reversed = names.sort(backwards)
 var closureReverse = names.sort({ (s1: String, s2: String) -> Bool in
     return s1 > s2
 })
+print(names)    // Original
 print(closureReverse)
+print(reversed)
 
 // Closures Expression
 // เขียนแบบต่อกันไป (inline)
+// ?
 
 // Full Closure
 var result1 = names.sort({(s1: String, s2: String) -> Bool in
@@ -350,7 +340,7 @@ var result41 : (Double,Double,Double) -> Double
 
 
 // Operator Functions
-var result5 = names.sort(<)
+var result5 = names.sort(>)
 
 //
 var ClosureArea2 : (Double,Double,Double) ->Double
