@@ -32,6 +32,23 @@ import UIKit
     print(intNil)
 
 
+    /*
+        Integer คือ ตัวเลขจำนวนเต็มที่ไม่ใช่จุดทศนิยม เช่น 1, 3, 67, 99 เป็นต้น
+        ซึ่ง Integer มีอยู่ด้วยกัน 2 แบบคือ siged และ unsigned
+        1.signed เป็นบวกศูนย์หรือลบก็ได้ เช่น -5, -4, -3, -2, -1, 0, 1, 2
+        2.unsigned เป็นบวกกับศูนย์ไม่มีค่าติดลบ 0, 1, 2, 3
+
+        signed และ unsigned Integer มีทั้งในแบบ 8, 16, 32 และ 64 บิตตัวอย่าง เช่น
+        UInt8 หมายถึง Unsigned Integer 8 bit
+        Int32 หมายถึง Signed Integer 32 bit
+    */
+
+    var signedInt:Int = -1
+
+    var unsign:UInt = 0
+    // var unsign1:UInt = -1 // error range >= 0
+
+
     let orangesAreOrange:Bool = true        // Bool
 
     let (x, y) = ("xx","yy")

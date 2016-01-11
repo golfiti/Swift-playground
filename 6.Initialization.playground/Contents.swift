@@ -93,3 +93,10 @@ print(testInstanceStruct.property2)
 print(testInstanceStruct2.property1)
 print(testInstanceStruct2.property2)
 
+
+
+// Required
+
+
+
+
