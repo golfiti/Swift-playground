@@ -3,10 +3,10 @@
 import UIKit
 
 
-
 // Extensions
 /* 
     - กำหนดมาเพื่อใช้คำนวนอะไรสักอย่าง (computed)
+    - คล้ายกับ categories ใน Obj-C แตกต่างตรงที่ไม่มีชื่อ
 
     Add computed properties and computed type properties
     Define instance methods and type methods
@@ -17,6 +17,14 @@ import UIKit
 
     * Extensions can add new functionality to a type,
     but they cannot override existing functionality.
+*/
+
+
+// Syntax
+/*
+    extension SomeType: SomeProtocol, AnotherProtocol {
+        // implementation of protocol requirements goes here
+    }
 */
 
 extension Double {
@@ -88,7 +96,6 @@ someInt.square()
 
 
 
-
 // Protocols
 /*
     คือ การเตรียมแม่แบบสำหรับ method,property
@@ -101,7 +108,14 @@ someInt.square()
     (คือ method ที่สร้างขึ้นมา inherit จาก protocol นั้นมี func,property ครบตามแบบของ protocols)
 */
 
+
 // Syntax
+/*
+    class SomeClass: SomeSuperclass, FirstProtocol, AnotherProtocol {
+        // class definition goes here
+    }
+*/
+
 protocol FullyNamed {
     
     // ต้องประกาศเป็น var เท่านั้นเพราะสามารถเปลี่ยนค่าได้
