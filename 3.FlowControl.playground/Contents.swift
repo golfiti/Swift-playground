@@ -302,3 +302,98 @@ myText:for char in myText.characters{
     }
     print(char)
 }
+
+
+
+
+
+
+
+
+// where
+// Source : https://gist.github.com/krzyzanowskim/cfdc1990b8988469decf
+
+// for-in
+func checkForIn(array: [Int], dict: [Int: String]) {
+    for num in array where dict[num] != nil {
+        num
+    }
+}
+
+checkForIn([1,2,3,4], dict: [1:"one", 2:"two"])
+
+// do-catch
+
+enum ResponseError: ErrorType {
+    case HTTP(Int)
+}
+
+func errorProne() throws {
+    throw ResponseError.HTTP(404)
+}
+
+do {
+    try errorProne()
+} catch ResponseError.HTTP(let code) where code >= 400 && code % 2 == 0 {
+    print("400 Bad Request") // match
+} catch ResponseError.HTTP(let code) where code >= 500 && code < 600  {
+    print("Internal Server Error")
+}
+
+// while
+
+func checkWhile(inout array: [Int]?) {
+    while let arr = array where arr.count < 5 {
+        array?.append(0)
+    }
+}
+
+var mutableArray:[Int]? = []
+checkWhile(&mutableArray)
+
+// if
+
+func checkIf(string: String?) {
+    if let str = string where str == "checkmate" {
+        print("game over")
+        return
+    }
+    print("let's play")
+}
+
+checkIf("checkmate")
+
+// guard
+
+func checkGuard(string: String?) {
+    guard let str = string where str != "checkmate" else {
+        print("game over")
+        return
+    }
+    print("let's play")
+}
+
+checkGuard("checkmate")
+
+// switch-case
+
+var value = (1,2)
+switch value {
+case let (x, y) where x == 1:
+    // match 1
+    break
+case let (x, y) where x / 5 == 1:
+    // not-match
+    break
+    
+default:
+    break
+}
+
+// generics
+
+func genericFunction<S where S: StringLiteralConvertible>(string: S) {
+    print(string)
+}
+
+genericFunction("lambada")
