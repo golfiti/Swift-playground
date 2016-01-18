@@ -6,7 +6,7 @@ import UIKit
 // Create View
 let container = UIView(frame: CGRect(x: 0.0, y: 0.0, width: 100.0, height: 100.0))
 container.backgroundColor  = UIColor.darkGrayColor()
-let view = UIView(frame: CGRect(x: 0.0, y: 0.0, width: 50.0, height: 50.0))
+let view = UIView(frame: CGRect(x: 25, y: 25, width: 50.0, height: 50.0))
 view.backgroundColor = UIColor.blackColor()
 
 

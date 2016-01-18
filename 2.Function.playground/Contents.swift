@@ -254,6 +254,13 @@ import UIKit
     print("CurrentPos \(posXNow(posX))")
 
 
+
+
+
+
+
+
+
 // --------- Closure --------- //
 
 // Function as Variable
@@ -263,7 +270,7 @@ import UIKit
 
 // Syntax 
 // {(parameter) -> return type in statement }
-// หลัง in คือ โค๊ดของฟังก์ชั่นที่ไม่มีชื่อ 
+// หลัง in คือ โค๊ดของฟังก์ชั่นที่ไม่มีชื่อ
 
 // ประกาศตัวแปรเพื่อเก็บ Closure
 // ฟังก์ชันนี้ Closure จะดูงงๆเราจะประกาศตัวแปรเพื่อเก็บค่า Closure ให้ง่ายขึ้น
@@ -292,7 +299,60 @@ import UIKit
 //            }
 //        }
 //        UIView.animateWithDuration(0.2, animations: animate, completion: doneAnimate)
+
+        // กำหนดตัวแปรให้กับ closure เพื่อให้ดูง่าย
+        // animate
+        // doneAnimate
+    
+        // มีการรับ parameter 3 ตัว 
+        // คือ  - 0.2
+        //     - animations
+        //     - completion
 // }
+
+
+
+// Closure Syntax
+var noParameterAndNoReturnValue: () -> () = {
+    print("Hello!")
+}
+var noParameterAndNoReturnValue2 = {
+    print("Hello!")
+}
+
+
+var noParameterAndReturnValue: () -> (Int) = {
+    return 1000
+}
+var noParameterAndReturnValue2 = { () -> Int in
+    return 1000
+}
+
+
+var oneParameterAndReturnValue: (Int) -> (Int) = { x -> Int in
+    return x % 10
+}
+var oneParameterAndReturnValue2 = { (x: Int) -> Int in
+    return x % 10
+}
+
+
+var multipleParametersAndReturnValue: (String, String) -> (String) = {
+    (first, second) -> String in
+    return first + " " + second
+}
+var multipleParametersAndReturnValue2 = {
+    (first: String, second: String) -> String in
+    return first + " " + second
+}
+
+
+var varClosure: (/*parameterTypes*/) -> (String)
+
+// Optional
+var optionalClosure:((/*parameterTypes*/) -> (String))?
+
+
 
 
 
@@ -311,9 +371,11 @@ print(names)    // Original
 print(closureReverse)
 print(reversed)
 
+
+
+
 // Closures Expression
 // เขียนแบบต่อกันไป (inline)
-// ?
 
 // Full Closure
 var result1 = names.sort({(s1: String, s2: String) -> Bool in
@@ -327,9 +389,7 @@ var result2 = names.sort({s1,s2 in
 
 // Implicit Returns from Single-Expression Closures
 // ต้องมีคำสั่งเดียวจึงจะสามารถไม่ใส่ return ได้
-var result3 = names.sort({s1,s2 in
-    s1 < s2
-})
+var result3 = names.sort({s1,s2 in s1 < s2})
 
 // Shorthand Argument Names
 // $0 - argument ลำดับที่ 0, $1 - argument ลำดับที่ 1,...
@@ -342,40 +402,77 @@ var result41 : (Double,Double,Double) -> Double
 // Operator Functions
 var result5 = names.sort(>)
 
-//
-var ClosureArea2 : (Double,Double,Double) ->Double
-ClosureArea2 = { (w,l,h) in ( w * l * h) }
-print("ClosureArea2 = \(ClosureArea2(1,2,3))")
-
-ClosureArea2 = { (a,b,c) in ( (a * b) * c) }
-print("ClosureArea2 after change logic = \(ClosureArea2(1,2,3))")
 
 
 
+// Trailing Closure Syntax
+// คือการเขียน Closure อยู่นอกวงเล็บ
+
+// Trailing Closure Example 1
+var numbers = [1,2,3,5,6,8,9]
+numbers.sort { $0 < $1 }
+func sum(from: Int, to: Int, f: (Int) -> (Int)) -> Int {
+    var sum = 0
+    for i in from...to {
+        sum += f(i)
+    }
+    return sum
+}
+
+sum(1, to: 10) {
+    $0          // Trailing Closure
+}
+
+sum(1, to: 10) {
+    $0 * $0     // Trailing Closure
+}
 
 
-var customersInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
-print(customersInLine.count)
-// prints "5"
+// Trailing Closure Example 2
+func dice(diceInput:()->Int)->Int{
+    let diceNumber = diceInput()
+    return diceNumber
+}
 
-let customerProvider = { customersInLine.removeAtIndex(0) }
-print(customersInLine.count)
-// prints "5"
+let low = dice(){   // ใช้ trailing closure โดยใส่วงเล็บก่อน แล้วค่อยใส่ปีกกา {
+    ()->Int in      // Closure parameter type และ return type
+    return Int(arc4random_uniform(3)+1) // random 1,2,3
+}
 
-print("Now serving \(customerProvider())!")
-// prints "Now serving Chris!"
-print(customersInLine.count)
-// prints "4"
+let height = dice{ // เนื่องจาก closure ไม่มี parameter เราจึงตัด () ออกไปได้
+    ()->Int in
+    return Int(arc4random_uniform(3)+4) // random 4,5,6
+}
+
+let normal = dice{
+    // ทราบว่า closure มี type เป็นอะไรอยู่แล้วจึงตัด ()->Int ออกไปได้
+    // ตัด return ออกเนื่องจากมี statement เดียว
+    Int(arc4random_uniform(6)+1)
+}
+
+print(low)
+print(height)
+print(normal)
 
 
 
+/*
+    Value Type และ Reference Type
+
+    - Value type ก๊อปปี้ค่า ซึ่งหากค่าที่ถูกแก้ไขก็จะไม่มีผลต่อค่าต้นฉบับ
+    constant หรือ variable ส่วนใหญ่จะเป็น value type
+    
+    - function และ closure เป็น reference type ซึ่งหากเราประกาศ variable หรือ let
+    มารับ function หรือ closure จะมีการสร้าง reference ไปยัง function หรือ closure นั้นๆ
+    จะเป็นการสร้าง pointer ดังนั้นการแกไขค่าใน reference type นั้นจะมีผลต่อต้นฉบับเสมอ
+*/
 
 
+/*
+    Capture
+    คือ ความสามารถของ closure ในการเลือกใช้ value type หรือ reference type
+*/
 
-
-
-
-// แก้ไขค่าใน ref type ??
 func makeIncrementor(forIncrement amount:Int) -> () -> Int {
     var runningTotal = 0
     func incrementor() -> Int {
@@ -385,12 +482,49 @@ func makeIncrementor(forIncrement amount:Int) -> () -> Int {
     return incrementor
 }
 
-var testIncrementby5 = makeIncrementor(forIncrement: 5)
-let newRef = testIncrementby5
-newRef()
-newRef()
-testIncrementby5()
-print("\(newRef())")
+var testIncrementby9 = makeIncrementor(forIncrement: 9)
+testIncrementby9()
+print(testIncrementby9())
+
+var testIncrementBy5 = makeIncrementor(forIncrement: 5)
+testIncrementBy5()
+testIncrementBy5()
+testIncrementBy5()
+print(testIncrementBy5())
+
+
+
+// a closure that take one Int and return an Int
+var doubleRefType:(Int)->(Int) = { x in
+    return 2*x
+}
+doubleRefType(2)
+
+// you can pass closures in your code, for example to other variables
+var alsoDouble = doubleRefType
+alsoDouble(3)
+
+
+
+
+// แก้ไขค่าใน Reference Type
+let testIncrementBy8 = makeIncrementor(forIncrement: 8)     // ประกาศ constant
+let newReference = testIncrementBy5                         // ประกาศ constant ขึ้นมาอีกตัว
+newReference()
+newReference()
+testIncrementBy8()
+print(newReference())
+// ไม่ว่าจะเรียกใช้ newReference หรือ testIncrementBy8
+// ก็จะมีผลเกี่ยวข้องกันจากการที่ใช้ reference ไปยังที่เดียวกันนั่นเอง
+
+
+/*
+    Note :
+
+    swift จะตรวจสอบเองว่าใช้ capture แบบใด
+    ถ้ามีการแก้ไขก็จะ capture ค่าในแบบ Reference Type 
+    ถ้าไม่มีการแก้ไขก็จ capture ค่าในแบบ Value Type (ก็อปปี้ค่า)
+*/
 
 
 
