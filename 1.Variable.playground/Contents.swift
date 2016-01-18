@@ -60,6 +60,12 @@ import UIKit
     varCanChange = "var Changed"
 
 
+    // Type Alias
+    // คือการกำหนดชื่อให้กับ Value Type ที่มีอยู่
+    // ประโยชน์ที่ได้คือเราต้องการอ้างอิงข้อมูลได้ง่ายขึ้น
+    typealias myColor8bit = UInt8
+    var currentColor:myColor8bit = 123
+    // จากตัวอย่างได้ตั้งชื่อ myColor8bit ให้กับ UInt8 และต่อไปเราจะใช้ myColor8bit ในการเรียกใช้ได้เลย
 
 
     // Dictionary
