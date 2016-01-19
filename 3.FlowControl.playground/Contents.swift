@@ -380,10 +380,12 @@ checkGuard("checkmate")
 var value = (1,2)
 switch value {
 case let (x, y) where x == 1:
+    print("matched")
     // match 1
     break
 case let (x, y) where x / 5 == 1:
     // not-match
+    print("not-match")
     break
     
 default:

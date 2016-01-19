@@ -509,7 +509,7 @@ alsoDouble(3)
 
 // แก้ไขค่าใน Reference Type
 let testIncrementBy8 = makeIncrementor(forIncrement: 8)     // ประกาศ constant
-let newReference = testIncrementBy5                         // ประกาศ constant ขึ้นมาอีกตัว
+let newReference = testIncrementBy8                       // ประกาศ constant ขึ้นมาอีกตัว
 newReference()
 newReference()
 testIncrementBy8()
