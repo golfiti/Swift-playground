@@ -212,6 +212,35 @@ import UIKit
     var forcedString:String? = "Forced unwarpped"
     print(forcedString)
 
+    // Optional Chaining
+    // ใส่ '?' หลังตัวแปล optional (ที่เดียวกับที่ใส่ '!' สำหรับ Force unwrapped) เพื่อเข้าถึง property, method, subscript ของตัวแปร Optional
+    // ถ้าตัวแปร Optional นั้นมีค่า ส่งผลให้ Optional Chaining จะ return ค่าตรงตาม Data Type ของ property, method หรือ subscript นั้นๆ แต่จะเป็นค่า Optional เสมอ
+    // ถ้าตัวแปร Optional นั้นไม่มีค่า(เป็น nil) ส่งผลให้ Optional Chaining จะ return nil
+    class Person {
+        var residence: Residence?   // ตัวนี้เป็น Optional
+    }
+
+    class Residence {
+        var numberOfRooms:Int = 1
+    }
+
+    let john = Person() // ถ้าเรียกแบบนี้ จะเห็นว่าไม่มีการกำหนดค่าให้ตัวแปร residence ดังนั้น ตัวแปรนี้จะมีค่าเป็น nil (ตัวแปร Optioanl ค่าเริ่มต้นจะเป็น nil เสมอ)
+
+    if let roomCount = john.residence?.numberOfRooms {
+        print("John's residence has \(roomCount) room(s).")
+    } else {
+        print("Unable to retrieve the number of rooms.")
+    }
+    // เมื่อ residence มีค่าเป็น nil ทำให้ Optional Chaining return nil
+    // จะ print "Unable to retrieve the number of rooms."
+
+    john.residence = Residence()    // ถ้าเรากำหนดค่าให้ตัวแปร residence
+    var roomCount2 = john.residence?.numberOfRooms
+    print(roomCount2)
+    // เมื่อ residence มีค่า ทำให้ Optional Chaining return ค่าของตัวแปร numberOfRooms ได้สำเร็จ
+    // สังเกตุว่า roomCount2 เป็นตัวแปรชนิด Optional Int ในขณะที่ตัวแปร numberOfRooms นั้นเป็นแค่ Int เฉยๆ
+    // นั่นก้อเพราะ Optional Chaining จะ return ค่าเป็น Optional เสมอ
+
     // + Tuple
     // (เหมาะกับค่าข้อมูลชั่วคราวที่ไม่ซับซ้อน)
     var http500Error:(Int, String) = (500,"Server Error")           // Tuple
