@@ -95,6 +95,10 @@ import UIKit
     }
     myProfile(["Krid","Wong","25"])  // return input as tuple
 
+    func myProfileTest(info: [String]){
+    }
+    myProfileTest(["aaaaa","bbbbb"])
+
 
     func printDate(date: NSDate, format: String = "YY/MM/dd") -> String {
         let dateFormatter = NSDateFormatter()
