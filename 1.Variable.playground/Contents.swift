@@ -18,12 +18,12 @@ import UIKit
     var helloMsg:String = "Hello"           // String
     var helloMsgObjC:NSString = "Hello"     // Swift 2 has bridged NSString from Foundation framwork to String already
     print(helloMsg)
-    var postCode:Int = 111                  // Int
+    var postCode:Int = 10800                // Int
     var worldMsg:String?                    // define varible to nil
-    print(worldMsg)
+    print(worldMsg ?? "worldMsg not define value")
     worldMsg = "World"
     helloMsg += worldMsg!
-    helloMsg.characters.count
+    helloMsg.count
 
     var stringNumber:String = "1234"
     var intNumber:Int? = Int(stringNumber)      // Convert String to Int // "?" allow nil value
@@ -111,7 +111,7 @@ import UIKit
     // Remove Dict
     currecy["USD"] = nil
     currecy
-    currecy.removeValueForKey("THB")
+    currecy.removeValue(forKey: "THB")
     currecy
     currecy.removeAll()
     currecy
@@ -147,10 +147,10 @@ import UIKit
 
     // Add Array (not need MutableArray : let or var แทนเอามั้ง)
     color.append("Cyan")                                       // Add at last index
-    color.insert("Silver", atIndex: 1)                         // Add at custom index
+    color.insert("Silver", at: 1)                              // Add at custom index
 
     // Remove Array
-    color.removeAtIndex(0)                                     // Remove at custom index
+    color.remove(at: 0)                                        // Remove at custom index
     color
     color.removeLast()                                         // Remove at last index
     color
@@ -173,7 +173,7 @@ import UIKit
     // ใส่ ? หลัง Data Type เพื่อให้ตัวแปรสามารถเป็น nil ได้
     var OptionalWithReturn:String? = OptionalWithString()!      // ใส่ ? หลัง datatype String allow returnOp = nil
     // ใส่ ! หลัง OptionalTest() บังคับให้ OptionalTest ต้องมีค่า
-    print(OptionalWithReturn)
+    print(OptionalWithReturn ?? "nil")
 
     // Implicitly Unwrapped Optional (กำหนดให้ตัวแปรต้องมีค่าเสมอ)
     // ใส่ ! หลัง Data Type เพื่อเมื่อกำหนดค่าครั้งแรกไปแล้ว Optional ก็จะมีค่าเสมอ - Old 
@@ -195,7 +195,7 @@ import UIKit
     var testData:Int!
     testData = nil
     if (testData == nil){
-        print("sting \(testData)")
+        print("sting \(testData ?? nil)")
     }
 //    print(testData)
     testData = 50
@@ -253,9 +253,9 @@ import UIKit
     var (justTheStatusCode, _) = http404Error                       // _ คือไม่สนใจค่า
     print(justTheStatusCode)
 
-    // + Set (เหมาะกับค่าข้อมูลชั่วคราวที่ไม่ซับซ้อน)
+    // + Set
     // ซ่ำกันไม่ได้ ไม่มีลำดับ
-    // (เหมือน Set ในทางคณิตศาสตร์ที่เรียนตอน ม.4)
+    // (เหมือน Set ในทางคณิตศาสตร์)
 
     // Define Set
     var android:Set     = ["Samsung S6","HTC"]
@@ -263,12 +263,12 @@ import UIKit
     var iPhone:Set      = ["iPhone 6","iPhone 5"]
 
     var smartPhone      = android.union(apple)
-    var setIPhoneOnly   = apple.intersect(iPhone)
+    var setIPhoneOnly   = apple.intersection(iPhone)
 
     // Check subset
-    setIPhoneOnly.isSubsetOf(iPhone)
-    setIPhoneOnly.isSubsetOf(smartPhone)
-    setIPhoneOnly.isSubsetOf(android)
+    setIPhoneOnly.isSubset(of:iPhone)
+    setIPhoneOnly.isSubset(of:smartPhone)
+    setIPhoneOnly.isSubset(of:android)
 
 
 
@@ -282,7 +282,7 @@ import UIKit
 
     // Swift Collection -- VS -- Obj-C Collection
     // ควรใช้ Swift Colection มากกว่า
-    // เพราะทำงานเร็วกว่า Foundation (แต่ Method น้่อยกว่า)
+    // เพราะทำงานเร็วกว่า Foundation
 
     var swiftCollection = ["A","B","C"]
     var objcFounddation:NSMutableArray = ["A","B","C"]
@@ -290,8 +290,8 @@ import UIKit
     swiftCollection[0] = "X"
     objcFounddation[0] = "X"
 
-    swiftCollection.indexOf("B")
-    objcFounddation.indexOfObject("B")
+    swiftCollection.index(of: "B")
+    objcFounddation.index(of: "B")
 
 
     // + Assert
@@ -353,7 +353,6 @@ import UIKit
     myShip = .life(0)
 
     switch myShip {
-        
         // case not show auto completion
     case ship.life(let currentLife):
         if currentLife <= 0 {
