@@ -20,33 +20,34 @@ import UIKit
         let result = value1 + value2
         print(result)
     }
-    sumValue(1, value2: 3)
+    sumValue(value1: 1, value2: 3)
+
     func sumValueWithVoid (value1:Int,value2:Int)->(Void){
         let result = value1 + value2
         print(result)
     }
-    sumValueWithVoid(1, value2: 4)    // parameter อันแรกไม่ต้องกำหนดชื่อ
+    sumValueWithVoid(value1:1, value2: 4)
 
     func funcWithParam (param1:Int,param2:Int,param3:String) {
         print(param1)
         print(param2)
         print(param3)
     }
-    funcWithParam(1, param2: 2, param3: "3")
+    funcWithParam(param1: 1, param2: 2, param3: "3")
 
-    func funcWithParam2 ( aaaa:Int,param2:Int,param3:String) {
+    func funcWithParam2 (aaaa:Int,param2:Int,param3:String) {
         print(aaaa)
         print(param2)
         print(param3)
     }
 
-    funcWithParam2(1, param2: 2, param3: "3")
+    funcWithParam2(aaaa:1, param2: 2, param3: "3")
 
     func sumValueWithParameter(value1:Int,value2:Int){
         let result = value1 + value2
         print(result)
     }
-    sumValueWithParameter(1, value2: 2)
+    sumValueWithParameter(value1:1, value2: 2)
 
 
     // -- External Parameter -- //
@@ -65,8 +66,7 @@ import UIKit
         print("\(firstParam)")
         print("\(secondParameter)")
     }
-    omittingExternalParam(11, 22)                                  // เรียกแบบไม่มีชื่อ param
-
+    omittingExternalParam(firstParam: 11, 22)                       // เรียกแบบไม่มีชื่อ param
 
     // Return with Parameter
     // "->" = หากฟังก์ชั่นมีการส่งค่ากลับมา จะต้องกำหนด return type ตาม
@@ -75,13 +75,13 @@ import UIKit
         let sumValue = value1+value2
         return sumValue
     }
-    plusValue(1, value2: 1)
+    plusValue(value1:1, value2: 1)
 
     func sayHello(personName: String) -> String {
         let greeting = "Hello, " + personName + "!"
         return greeting
     }
-    sayHello("Golf")
+    sayHello(personName:"Golf")
 
 
     //  Multiple return type
@@ -93,17 +93,17 @@ import UIKit
         let myOld = info[2]
         return (myName,myLastname,myOld)
     }
-    myProfile(["Krid","Wong","25"])  // return input as tuple
+    myProfile(info: ["Krid","Wong","25"])  // return input as tuple
 
     func myProfileTest(info: [String]){
     }
-    myProfileTest(["aaaaa","bbbbb"])
+    myProfileTest(info:["aaaaa","bbbbb"])
 
 
     func printDate(date: NSDate, format: String = "YY/MM/dd") -> String {
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = format
-        return dateFormatter.stringFromDate(date)
+        return dateFormatter.string(from: date as Date)
     }
 
     // Default Value Parameter
@@ -112,7 +112,7 @@ import UIKit
         let mobileTeamResult = name+" "+lastname+" "+role+" @"+org
         return mobileTeamResult
     }
-    mobileTeam("Kridsanapong", lastname: "Wongthongdee", role:"iOS Dev")
+    mobileTeam(name:"Kridsanapong", lastname: "Wongthongdee", role:"iOS Dev")
 
 
     // Variadic Parameters
@@ -126,8 +126,7 @@ import UIKit
             print("Hello, \(name)")
         }
     }
-    helloWithNames("Batman", "Superman", "Wonder Woman", "Catwoman")
-//    helloWithNames("Pauline")
+    helloWithNames(names: "Batman", "Superman", "Wonder Woman", "Catwoman")
 
 
     // Constance & Variable parameter
@@ -136,13 +135,13 @@ import UIKit
     // ออกมาเก็บไว้ใน local variable ที่ชื่อเดียวกับ parameter
     // แล้วนำค่าที่ก๊อปปี้ขึ้นมาใหม่นี้ไปใช้งานใน Func
     // ค่าที่ parameter ส่งมาจะไม่ถูกเปลี่ยน (เปลี่ยนค่าที่เรา copies มาแล้วเท่านั้น)
-    func enterString(var string stringInput:String){
-        stringInput = ("stringInput message \(stringInput)")
+    func enterString(stringInput:String){
+        var stringInput = ("stringInput message \(stringInput)")
         print(stringInput)
     }
 
     let original = "test"
-    enterString(string: original) // ค่าที่ส่งไปจะไม่ถูกเปลี่ยน
+    enterString(stringInput: original) // ค่าที่ส่งไปจะไม่ถูกเปลี่ยน
     print(original)
 
 
@@ -150,12 +149,12 @@ import UIKit
     // แก้ไขและแทนที่ตัวแปรเดิม
     var name1 = "Mr.A ant mod"
     var name2 = "Mr.B bird nok"
-    func nameSwap(inout name1: String, inout name2: String) {
+    func nameSwap(name1:inout String,name2:inout String) {
         let oldName1 = name1
         name1 = name2
         name2 = oldName1
     }
-    nameSwap(&name1, name2: &name2)
+    nameSwap(name1: &name1, name2: &name2)
     name1
     name2
 
@@ -165,8 +164,8 @@ import UIKit
         print("\(parameter)")
     }
 
-    myFuncWithOptionalType("someString")
-    myFuncWithOptionalType(nil)
+    myFuncWithOptionalType(parameter:"someString")
+    myFuncWithOptionalType(parameter:nil)
 
 
     // Nested Functions
@@ -190,15 +189,14 @@ import UIKit
     mathFunction(2,3)
     let inferTypelet = addTwoInts
     inferTypelet(2,3)
-    addTwoInts(2, 3)
+    addTwoInts(a: 2, 3)
 
     // https://developer.apple.com/library/mac/documentation/Swift/Conceptual/Swift_Programming_Language/Functions.html
     // Function Types as Parameter Types ??
     func printMathResult(mathFunction: (Int, Int) -> Int, _ a: Int, _ b: Int) {
         print("Result: \(mathFunction(a, b))")
     }
-    printMathResult(addTwoInts, 3, 5)
-
+    printMathResult(mathFunction: addTwoInts, 3, 5)
 
 
 
@@ -221,8 +219,7 @@ import UIKit
         }
     }
     let testCallFuncInClass = TestCallFuncClass()
-    testCallFuncInClass.helloWorld("สวัสดีจ้า")
-
+    testCallFuncInClass.helloWorld(greeding: "Hello World")
 
 
     // Func type ในรูปแบบ Parameter
@@ -234,7 +231,7 @@ import UIKit
         print(random())
     }
     // randomDiceNumber()               // get ค่าที่ return กลับมาเฉยๆ ไม่เกี่ยว
-    showDiceNumber(randomDiceNumber)    // เอา Func randomDiceNumber ที่ได้ค่าออกมามาเป็นตัวเลขสุ่ม เอามาเป็น parameter
+    showDiceNumber(random:randomDiceNumber)    // เอา Func randomDiceNumber ที่ได้ค่าออกมามาเป็นตัวเลขสุ่ม เอามาเป็น parameter
 
 
     // Return type ในรูปแบบ Function Type ???
@@ -254,7 +251,7 @@ import UIKit
         return dicision
     }
 
-    var posXNow = currentPos(goDirectionRight)
+    var posXNow = currentPos(testLeftRight:goDirectionRight)
     print("CurrentPos \(posXNow(posX))")
 
 
@@ -361,50 +358,50 @@ var optionalClosure:((/*parameterTypes*/) -> (String))?
 
 
 // Normal Sort
-let names = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
-func backwards(s1: String, _ s2: String) -> Bool {
-    return s1 > s2
-}
-var reversed = names.sort(backwards)
-
-// Closures Sort
-var closureReverse = names.sort({ (s1: String, s2: String) -> Bool in
-    return s1 > s2
-})
-print(names)    // Original
-print(closureReverse)
-print(reversed)
-
-
-
-
-// Closures Expression
-// เขียนแบบต่อกันไป (inline)
-
-// Full Closure
-var result1 = names.sort({(s1: String, s2: String) -> Bool in
-    return s1 < s2
-})
-
-// Inferring Type From Context
-var result2 = names.sort({s1,s2 in
-    return s1 < s2
-})
-
-// Implicit Returns from Single-Expression Closures
-// ต้องมีคำสั่งเดียวจึงจะสามารถไม่ใส่ return ได้
-var result3 = names.sort({s1,s2 in s1 < s2})
-
-// Shorthand Argument Names
-// $0 - argument ลำดับที่ 0, $1 - argument ลำดับที่ 1,...
-var result4 = names.sort({$0 < $1})
-var result41 : (Double,Double,Double) -> Double
-    result41 = {$0 * $1 * $2}
-    print(result41(1,2,3))
-
-
-// Operator Functions
-var result5 = names.sort(>)
+//let names = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
+//func backwards(s1: String, _ s2: String) -> Bool {
+//    return s1 > s2
+//}
+//var reversed = names. sort(backwards)
+//
+//// Closures Sort
+//var closureReverse = names.sort({ (s1: String, s2: String) -> Bool in
+//    return s1 > s2
+//})
+//print(names)    // Original
+//print(closureReverse)
+//print(reversed)
+//
+//
+//
+//
+//// Closures Expression
+//// เขียนแบบต่อกันไป (inline)
+//
+//// Full Closure
+//var result1 = names.sort({(s1: String, s2: String) -> Bool in
+//    return s1 < s2
+//})
+//
+//// Inferring Type From Context
+//var result2 = names.sort({s1,s2 in
+//    return s1 < s2
+//})
+//
+//// Implicit Returns from Single-Expression Closures
+//// ต้องมีคำสั่งเดียวจึงจะสามารถไม่ใส่ return ได้
+//var result3 = names.sort({s1,s2 in s1 < s2})
+//
+//// Shorthand Argument Names
+//// $0 - argument ลำดับที่ 0, $1 - argument ลำดับที่ 1,...
+//var result4 = names.sort({$0 < $1})
+//var result41 : (Double,Double,Double) -> Double
+//    result41 = {$0 * $1 * $2}
+//    print(result41(1,2,3))
+//
+//
+//// Operator Functions
+//var result5 = names.sort(>)
 
 
 
@@ -423,11 +420,12 @@ func sum(from: Int, to: Int, f: (Int) -> (Int)) -> Int {
     return sum
 }
 
-sum(1, to: 10) {
+
+sum(from: 1, to: 10) {
     $0          // Trailing Closure
 }
 
-sum(1, to: 10) {
+sum(from: 1, to: 10) {
     $0 * $0     // Trailing Closure
 }
 
